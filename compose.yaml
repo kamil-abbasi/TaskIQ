@@ -1,0 +1,47 @@
+services:
+  tasks:
+    build:
+      context: ./tasks
+    volumes:
+      - ./tasks/src:/app/src
+    env_file:
+      - ./tasks/.env
+      - ./tasks/.env.dev
+    ports:
+      - 3000:3000
+    healthcheck:
+      test: curl localhost:3000/healthcheck
+      timeout: 10s
+      start_period: 15s
+    depends_on:
+      tasks-db:
+        condition: service_healthy
+  tasks-web-ui:
+    build:
+      context: ./tasks-web-ui
+    volumes:
+      - ./tasks-web-ui/src:/app/src
+    env_file:
+      - ./tasks-web-ui/.env
+      - ./tasks-web-ui/.env.dev
+    ports:
+      - 4000:5173
+    depends_on:
+      tasks:
+        condition: service_healthy
+  tasks-db:
+    build:
+      context: ./tasks-db
+    env_file:
+      - ./tasks-db/.env
+      - ./tasks-db/.env.dev
+    volumes:
+      - tasks-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      timeout: 30s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  tasks-db-data:
