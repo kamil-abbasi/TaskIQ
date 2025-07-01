@@ -16,6 +16,17 @@ services:
     depends_on:
       tasks-db:
         condition: service_healthy
+  tasks-mcp-server:
+    build:
+      context: ./tasks-mcp-server
+    volumes:
+      - ./tasks-mcp-server/src:/app/src
+    env_file:
+      - ./tasks-mcp-server/.env
+      - ./tasks-mcp-server/.env.dev
+    depends_on:
+      tasks:
+        condition: service_healthy
   tasks-web-ui:
     build:
       context: ./tasks-web-ui
