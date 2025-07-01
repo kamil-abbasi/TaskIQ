@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import { config } from './config/env';
 import { ConsoleLogger } from '@nestjs/common';
 import { HttpExceptionFilter } from './common';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -13,6 +14,11 @@ async function bootstrap() {
     }),
   });
 
+  app.enableCors({
+    origin: ['http://localhost:5173'],
+    methods: ['GET', 'PATCH', 'POST', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
+  } as CorsOptions);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.use(json(), urlencoded({ extended: true }));
 
