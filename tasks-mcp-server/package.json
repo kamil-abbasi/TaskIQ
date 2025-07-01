@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch ./src/index.ts",
     "build": "tsc && chmod 755 ./dist/index.js",
-    "start": "node ./dist/index.js"
+    "start": "node dist/index.js"
   },
   "bin": {
     "tasks": "./dist/index.js"
@@ -21,6 +21,7 @@
   "type": "module",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.13.2",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {

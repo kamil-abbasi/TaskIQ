@@ -1,5 +1,5 @@
-import type { TaskCreateDto, Task } from "@/types/index.js";
-import { env } from '@/config/env.js';
+import type { TaskCreateDto, Task } from "../../types/index.js";
+import { env } from '../../config/env.js';
 
 export async function create(createDto: TaskCreateDto): Promise<Task> {
   return fetch(`${env.apiUrl}/tasks`,

@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { tasksApi } from "./api/index.js";
 import { Task } from "./types/index.js";
@@ -18,9 +18,7 @@ const server = new McpServer({
 })
 
 async function main() {
-  const transport = new StreamableHTTPServerTransport({
-    sessionIdGenerator: undefined
-  });
+  const transport = new StdioServerTransport();
 
   await server.connect(transport);
 
@@ -30,12 +28,8 @@ async function main() {
 server.tool(
   'find-tasks',
   'Finds tasks',
-  {
-    completed:
-      z.boolean()
-        .describe('Flag that states whether task is completed or not')
-  },
-  async ({ completed }) => {
+  {},
+  async ({ }) => {
     try {
       const tasks = await tasksApi.find()
       const formattedTasks = tasks.map((task) => formatTask(task));
