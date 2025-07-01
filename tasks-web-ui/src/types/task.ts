@@ -1,1 +1,5 @@
-export type Task = {};
+export type Task = {
+  id: string;
+  name: string,
+  completed: boolean,
+};
