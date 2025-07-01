@@ -4,9 +4,6 @@ import { z } from 'zod';
 import { tasksApi } from "./api/index.js";
 import { Task } from "./types/index.js";
 
-const TASKS_API_BASE = 'http://tasks:3000';
-const USER_AGENT = 'tasks-app/1.0';
-
 const server = new McpServer({
   name: 'tasks',
   version: "1.0.0",
@@ -22,7 +19,7 @@ async function main() {
 
   await server.connect(transport);
 
-  console.error("Weather MCP Server running on http");
+  console.error("Tasks MCP Server running on http");
 }
 
 server.tool(
